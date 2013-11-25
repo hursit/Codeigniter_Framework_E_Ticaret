@@ -1,0 +1,313 @@
+
+<!-- saved from url=(0047)http://www.gsp.com/cgi-bin/man.cgi?topic=strsep -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1254">
+<title>strsep(3) - separate strings</title>
+</head><body bgcolor="#F3F3FF" text="#000000" link="#000099" alink="#000000" vlink="#000099">
+<!--
+ *-------------------------------------------------------------------------
+ | 
+ |  COPYRIGHT NOTICE
+ |  Copyright (c) 1994-2013 GSP Services, Inc.
+ |     12635 Heming Ln, Bowie, MD 20716, U.S.A.
+ |     All rights reserved.
+ | 
+ |  All content on the GSP web sites and servers including the   
+ |  elements of design and layout unless otherwise noted is copyrighted
+ |  material and protected by trade dress and other laws and may not be
+ |  copied or imitated in whole or in part.  Violators will be
+ |  prosecuted to the maximum extent possible.
+ |
+ |  By viewing the source of this document, you signify you have read
+ |  the above copyright notice and accept the terms of use.
+ |
+ *-------------------------------------------------------------------------
+  -->
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td width="1" bgcolor="#660066"><img width="1" height="1" alt="" src="./g_files/clear.gif"></td>
+<td valign="top" width="110" bgcolor="#E7E7FF">
+<br><center><a href="http://www.gsp.com/">
+<img src="./g_files/gsp-nav.gif" border="0" width="92" height="33" alt="GSP"></a></center>
+<center><table width="110"><tbody><tr><td align="left" bgcolor="#330066"><center>
+<font color="#FFFF00">Quick Navigator</font></center></td></tr></tbody></table></center>
+<hr size="2" noshade="">
+<table width="110" border="0"><tbody><tr><td align="left">
+   <form method="GET" action="http://www.gsp.com/cgi-bin/search.cgi">
+   <b><font color="#CC0000">Search Site</font></b><br>
+   <input name="keywords" size="13" maxlength="512"></form>
+<p>
+ <b><font color="#CC0000">Linux VPS</font></b>
+  <br><a href="http://www.gsp.com/servers/linux/a/"><font size="-1">A - Starter</font></a>
+  <br><a href="http://www.gsp.com/servers/linux/b/"><font size="-1">B - Basic</font></a>
+  <br><a href="http://www.gsp.com/servers/linux/c/"><font size="-1">C - Preferred</font></a>
+  <br><a href="http://www.gsp.com/servers/linux/d/"><font size="-1">D - Commercial</font></a>
+  <br><a href="http://www.gsp.com/servers/linux/mps/"><font size="-1">MPS - Dedicated</font></a>
+  <br><a href="http://www.gsp.com/servers/legacy/"><font size="-1">Previous VPSs</font></a>
+  <br><font color="#cc0000">*</font>
+  <a href="http://www.gsp.com/cgi-bin/signup.cgi"><font size="-1">Sign Up!</font></a>
+  <font color="#cc0000">*</font>
+</p><p>
+ <b><font color="#CC0000">Support</font></b>
+  <br><a href="http://www.gsp.com/cgi-bin/email.cgi"><font size="-1">Contact Us</font></a>
+  <br><a href="http://www.gsp.com/support/vps/"><font size="-1">Online Help</font></a>
+  <br><a href="http://www.gsp.com/support/handbook/"><font size="-1">Handbooks</font></a>
+  <br><a href="http://www.gsp.com/whois/"><font size="-1">Domain Status</font></a>
+  <br><a href="http://www.gsp.com/support/man/"><font size="-1">Man Pages</font></a>
+</p><p>
+ <b><font color="#CC0000">FAQ</font></b>
+  <br><a href="http://www.gsp.com/support/vps/faq.html"><font size="-1">Virtual Servers</font></a>
+  <br><a href="http://www.gsp.com/pricing/"><font size="-1">Pricing</font></a>
+  <br><a href="http://www.gsp.com/billing/"><font size="-1">Billing</font></a>
+  <br><a href="http://www.gsp.com/faq/technical.html"><font size="-1">Technical</font></a>
+</p><p>
+ <b><font color="#CC0000">Network</font></b>
+  <br><a href="http://www.gsp.com/facilities/"><font size="-1">Facilities</font></a>
+  <br><a href="http://www.gsp.com/network/"><font size="-1">Connectivity</font></a>
+  <br><a href="http://www.gsp.com/network/map/"><font size="-1">Topology Map</font></a>
+</p><p>
+ <b><font color="#CC0000">Miscellaneous</font></b>
+  <br><a href="http://www.gsp.com/servers/agreement.html"><font size="-1">Server Agreement</font></a>
+  <br><a href="http://www.gsp.com/2038/"><font size="-1">Year 2038</font></a>
+  <br><a href="http://www.gsp.com/credits/"><font size="-1">Credits</font></a>
+<br>&nbsp;
+</p><center><img src="./g_files/flag.gif" height="54" width="69" alt="USA Flag"></center>
+<p>&nbsp;
+</p><p>&nbsp;
+</p></td></tr></tbody></table>
+</td><td width="1" bgcolor="#660066"><img width="1" height="1" alt="" src="./g_files/clear.gif">
+</td><td width="5"></td>
+<td valign="top">
+<a name="top"></a>
+<!-- .\" Copyright (c) 1990, 1991, 1993 -->
+<!-- .\"	The Regents of the University of California.  All rights reserved. -->
+<!-- .\" -->
+<!-- .\" This code is derived from software contributed to Berkeley by -->
+<!-- .\" Chris Torek. -->
+<!-- .\" -->
+<!-- .\" Redistribution and use in source and binary forms, with or without -->
+<!-- .\" modification, are permitted provided that the following conditions -->
+<!-- .\" are met: -->
+<!-- .\" 1. Redistributions of source code must retain the above copyright -->
+<!-- .\"    notice, this list of conditions and the following disclaimer. -->
+<!-- .\" 2. Redistributions in binary form must reproduce the above copyright -->
+<!-- .\"    notice, this list of conditions and the following disclaimer in the -->
+<!-- .\"    documentation and/or other materials provided with the distribution. -->
+<!-- .\" 3. All advertising materials mentioning features or use of this software -->
+<!-- .\"    must display the following acknowledgement: -->
+<!-- .\"	This product includes software developed by the University of -->
+<!-- .\"	California, Berkeley and its contributors. -->
+<!-- .\" 4. Neither the name of the University nor the names of its contributors -->
+<!-- .\"    may be used to endorse or promote products derived from this software -->
+<!-- .\"    without specific prior written permission. -->
+<!-- .\" -->
+<!-- .\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND -->
+<!-- .\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE -->
+<!-- .\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE -->
+<!-- .\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE -->
+<!-- .\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL -->
+<!-- .\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS -->
+<!-- .\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) -->
+<!-- .\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT -->
+<!-- .\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY -->
+<!-- .\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF -->
+<!-- .\" SUCH DAMAGE. -->
+<!-- .\" -->
+<!-- .\"	@(#)strsep.3	8.1 (Berkeley) 6/9/93 -->
+<!-- .\" $FreeBSD: src/lib/libc/string/strsep.3,v 1.14.20.1 2008/10/02 02:57:24 kensmith Exp $ -->
+<!-- .\" -->
+<!-- .Dd June 9, 1993 -->
+<!-- .Dt STRSEP 3 -->
+<center>
+<a href="http://www.gsp.com/support/man/" border="0"><img src="./g_files/title.png" border="0" width="537" height="77" alt="Man Pages"></a>
+</center>
+<center>
+<h1><hr><i>Manual Reference Pages &nbsp;-&nbsp;</i><nobr>STRSEP (3)</nobr><hr></h1>
+</center>
+<!-- .Os -->
+<!-- .Sh NAME -->
+<a name="0">
+
+     <h3>NAME</h3>
+
+</a>
+<blockquote>
+<!-- .Nm strsep -->
+<b> strsep</b>
+<!-- .Nd separate strings -->
+- separate strings
+<!-- .Sh LIBRARY -->
+</blockquote>
+<a name="contents"></a><h3>CONTENTS</h3>
+<blockquote>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#1">Library</a><br>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#2">Synopsis</a><br>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#3">Description</a><br>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#4">Examples</a><br>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#5">See Also</a><br>
+<a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#6">History</a><br>
+</blockquote>
+<a name="7">
+
+     <h3>LIBRARY</h3>
+
+</a>
+<blockquote>
+<!-- .Lb libc -->
+<br>.Lb libc
+<!-- .Sh SYNOPSIS -->
+</blockquote>
+<a name="2">
+
+     <h3>SYNOPSIS</h3>
+
+</a>
+<blockquote>
+<!-- .In string.h -->
+<br>.In string.h
+<!-- .Ft char * -->
+<i> char *</i>
+<!-- .Fn strsep "char **stringp" "const char *delim" -->
+<tt> strsep char **stringp const char *delim</tt>
+<!-- .Sh DESCRIPTION -->
+</blockquote>
+<a name="3">
+
+     <h3>DESCRIPTION</h3>
+
+</a>
+<blockquote>
+The
+<!-- .Fn strsep -->
+<tt> strsep</tt>
+function locates, in the string referenced by
+<!-- .Fa *stringp , -->
+<i> *stringp</i>,
+the first occurrence of any character in the string
+<!-- .Fa delim -->
+<i> delim</i>
+(or the terminating
+<!-- .Ql \e0 -->
+‘<tt>\0</tt>’
+character) and replaces it with a
+<!-- .Ql \e0 . -->
+‘<tt>\0</tt>’.
+The location of the next character after the delimiter character
+(or NULL, if the end of the string was reached) is stored in
+<!-- .Fa *stringp . -->
+<i> *stringp</i>.
+The original value of
+<!-- .Fa *stringp -->
+<i> *stringp</i>
+is returned.
+<!-- .Pp -->
+<p>
+An
+<!-- .Dq empty -->
+"empty"
+field (i.e., a character in the string
+<!-- .Fa delim -->
+<i> delim</i>
+occurs as the first character of
+<!-- .Fa *stringp ) -->
+<i> *stringp</i>)
+can be detected by comparing the location referenced by the returned pointer
+to
+<!-- .Ql \e0 . -->
+‘<tt>\0</tt>’.
+<!-- .Pp -->
+</p><p>
+If
+<!-- .Fa *stringp -->
+<i> *stringp</i>
+is initially
+<!-- .Dv NULL , -->
+<tt> NULL</tt>,
+<!-- .Fn strsep -->
+<tt> strsep</tt>
+returns
+<!-- .Dv NULL . -->
+<tt> NULL</tt>.
+<!-- .Sh EXAMPLES -->
+</p></blockquote>
+<a name="4">
+
+     <h3>EXAMPLES</h3>
+
+</a>
+<blockquote>
+The following uses
+<!-- .Fn strsep -->
+<tt> strsep</tt>
+to parse a string, containing tokens delimited by white space, into an
+argument vector:
+<!-- .Bd -literal -offset indent -->
+<pre>char **ap, *argv[10], *inputstring;
+<p>
+for (ap = argv; (*ap = strsep(&amp;inputstring, " \t")) != NULL;)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (**ap != ’\0’)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (++ap &gt;= &amp;argv[10])
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+<!-- .Ed -->
+</p></pre>
+<!-- .Sh SEE ALSO -->
+</blockquote>
+<a name="5">
+
+     <h3>SEE ALSO</h3>
+
+</a>
+<blockquote>
+<!-- .Xr memchr 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=memchr">memchr</a>(3),
+<!-- .Xr strchr 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strchr">strchr</a>(3),
+<!-- .Xr strcspn 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strcspn">strcspn</a>(3),
+<!-- .Xr strpbrk 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strpbrk">strpbrk</a>(3),
+<!-- .Xr strrchr 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strrchr">strrchr</a>(3),
+<!-- .Xr strspn 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strspn">strspn</a>(3),
+<!-- .Xr strstr 3 , -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strstr">strstr</a>(3),
+<!-- .Xr strtok 3 -->
+<a href="http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=strtok">strtok</a>(3)
+<!-- .Sh HISTORY -->
+</blockquote>
+<a name="6">
+
+     <h3>HISTORY</h3>
+
+</a>
+<blockquote>
+The
+<!-- .Fn strsep -->
+<tt> strsep</tt>
+function
+is intended as a replacement for the
+<!-- .Fn strtok -->
+<tt> strtok</tt>
+function.
+While the
+<!-- .Fn strtok -->
+<tt> strtok</tt>
+function should be preferred for portability reasons (it conforms to
+<!-- .St -isoC ) -->
+<i> -isoC</i>)
+it is unable to handle empty fields, i.e., detect fields delimited by
+two adjacent delimiter characters, or to be used for more than a single
+string at a time.
+The
+<!-- .Fn strsep -->
+<tt> strsep</tt>
+function first appeared in
+<!-- .Bx 4.4 . -->
+<i>BSD 4.4 .</i>
+<form action="http://www.gsp.com/cgi-bin/man.cgi" method="get">
+Search for &nbsp;<input name="keywords" size="12">&nbsp; or go to <a href="http://www.gsp.com/cgi-bin/man.cgi?topic=strsep#top">Top of page</a>&nbsp;|&nbsp;
+<a href="http://www.gsp.com/support/man/section-3.html">Section 3</a>&nbsp;|&nbsp;
+<a href="http://www.gsp.com/support/man/">Main Index</a>
+</form>
+</blockquote>
+<p></p><hr>
+<table width="100%"><tbody><tr> <td width="33%"><i>June 9, 1993</i></td> <td width="33%" align="center">STRSEP (3)</td> <td align="right" width="33%"><i></i></td> </tr></tbody></table><p><a href="http://www.gsp.com/"><img src="./g_files/p-gsp.gif" align="right" alt="Powered by GSP" border="1" width="88" height="31"></a> Visit the GSP <a href="http://www.gsp.com/support/man/">FreeBSD Man Page Interface</a>.<br>Output converted with <a href="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.07</a>.</p></td></tr></tbody></table></body></html>
