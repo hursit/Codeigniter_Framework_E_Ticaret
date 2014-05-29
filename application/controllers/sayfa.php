@@ -182,6 +182,7 @@ class Sayfa extends CI_Controller {
 		$this->data['yorumlar'] = $this->urun_model->get_yorumlar($id);
 		$this->data['urun']=$this->urun_model->get_urun($id);
 		$this->data['title'] = $this->data['urun']['urun'][0]->isim;
+		$this->data['detay'] = $this->data['urun']['urun'][0]->detay;
 		$this->data['adet'] = $this->cart->total_items();
 		$this->data['fiyat'] = $this->cart->total();
 		$this->data['sepetim'] = $this->cart->contents();	

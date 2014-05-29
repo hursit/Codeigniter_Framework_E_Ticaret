@@ -10,7 +10,7 @@ class Urun_model extends CI_Model {
 		   'fiyat' => $fiyat,
 		   'kategori_id' => $kategori_id ,
 		   'tiklanma' => 0,
-		   'detay' => '$detay' ,
+		   'detay' => $detay ,
 		   'indirimsiz_fiyati' => $indirimsiz_fiyati
 		);
 		if($this->db->insert('urun', $data))
@@ -22,7 +22,7 @@ class Urun_model extends CI_Model {
 	//sonra resimler seciliyor. Ekle dediginde ilk urun db ye ekleniyor. sonra resimler farkli bi tabloya
 	//eklenecek. Ama urun id lazim. o yuzden bu sekilde cekiyoruz.
 	public function get_id($isim,$kategori_id){
-		$sql = "SELECT * FROM  `urun`  WHERE  `isim` =  '$isim' AND `kategori_id` = $kategori_id order by id desc;";
+		$sql = "SELECT * FROM  `urun`  WHERE  `urun`.`isim`='$isim' and `kategori_id` = $kategori_id order by id desc;";
 		$query = $this->db->query( $sql);
 		if( $query->num_rows() > 0 ){
 		    $user=$query->row();
@@ -36,8 +36,8 @@ class Urun_model extends CI_Model {
 	//Urune resim ekleme
 	public function resim_ekle($urun_id,$resim_isim){
 		$data = array(
-		   'urun_id' => $urun_id ,
-		   'isim' => $resim_isim
+		   "urun_id" => $urun_id ,
+		   "isim" => $resim_isim
 		);
 		if($this->db->insert('resimler', $data))
 		    return TRUE;
@@ -158,7 +158,7 @@ class Urun_model extends CI_Model {
 		$urunler=array();
 		if( $query->num_rows() > 0 ){
 			foreach ( $query->result_array() as $urun){
-		    		array_push($urunler,array($urun,$this->pagination_model->get_resim($urun['id'])));	
+	 	    		array_push($urunler,array($urun,$this->pagination_model->get_resim($urun['id'])));	
 			}		 
 			return $urunler;		
 		}
@@ -345,7 +345,8 @@ class Urun_model extends CI_Model {
 		if( $query->num_rows() > 0 ){
 		    $user=$query->row();
 		    return $user->id;
-		}
+	
+	}
 		else {
 			return FALSE;
 		}
